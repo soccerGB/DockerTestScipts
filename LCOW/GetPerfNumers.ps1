@@ -8,7 +8,7 @@ $MINIMUM_PROCESS="vmmem"
 $Durations = "TotalHCSTime",
              "HcsCreateSytemDuration",  
              "UtilityVMConfigPrepTime", "UtilityVMStartDuration", "ConnectToGCSDuration", 
-             "UEFIOverheadTime", "KernelModeBootDuration", "UserModeBootTime",
+             "UEFIOverheadTime", "LinuxKernelDecompressingTime", "KernelModeBootDuration", "UserModeBootTime",
              "HcsStartSystemDuration",  "HcsCreateProcessDuration"
              
 
@@ -251,9 +251,12 @@ function Runtest
 
         #analyze HCS ETL file for duration breakdown
         $Durationtable = ParseHCSTrace -HCSLogFile $ETLLogFilename
+        #Remove-Item $ETLLogFilename
 
         $Durationtable["KernelModeBootDuration"] = $kernelModeBootEndTime
         $Durationtable["UserModeBootTime"] = $userModeBootEndTime - $kernelModeBootEndTime
+        $Durationtable["LinuxKernelDecompressingTime"] = [int]$Durationtable["ConnectToGCSDuration"] - [int]$Durationtable["UEFIOverheadTime"] - [int]$Durationtable["KernelModeBootDuration"]  - [int]$Durationtable["UserModeBootTime"]
+
         
         Write-Host "`n------------------------------------------"
         Write-Host " Test result for $TestImageName"
@@ -275,8 +278,6 @@ Write-Output ("=== Get performance numbers ===")
 $dockerVersion = docker version
 Write-OUtput $dockerVersion
 
-#$ContainerNet=Get-ContainerNetwork
-#$ContainerNetName=$ContainerNet[0].Name.ToString()
 
     $testCount=100
     $totalTimeK=0
@@ -305,17 +306,7 @@ Write-OUtput $dockerVersion
         write-host "Avg: $item = $([int]$DurationSumTable[$item] / $testCount) ms"
     }
 
-    #Write-Host "kernelBootTime = $([single]$totalTimeK/[single]$testCount) ms"
-    #Write-Host "usermodeBootTime = $([single]$totalTimeU/[single]$testCount) ms"
 
-
-#Runtest("ubuntu")
-#RunNetworkTesting("ubuntu")
-
-#RunDockerBuildTest("C:\\dockertest\\dockerfiles\\basic\\Dockerfile")
-
-
-#Stop-Transcript
 
 #busybox 
 #kernelBootTime = 839.58 ms

@@ -69,6 +69,7 @@ ULONGLONG g_hnsFirstEventTraceStartTime = 0;
 void WINAPI ProcessEvent(PEVENT_RECORD pEvent);
 DWORD GetEventInformation(PEVENT_RECORD pEvent, PTRACE_EVENT_INFO & pInfo);
 DWORD PrintPropertyMetadata(TRACE_EVENT_INFO* pInfo, DWORD i, USHORT indent);
+bool gbStarted = false;
 
 #define BUFSIZE MAX_PATH
 TCHAR LOGFILE_PATH[MAX_PATH];
@@ -219,70 +220,72 @@ VOID WINAPI ProcessEvent(PEVENT_RECORD pEvent)
 		switch (pInfo->EventDescriptor.Id)
 		{
 			case EventId_HcsRpC_CreateSystem_Start:
-				if (BootEventInfo.hnsCreateSytem_Start_begin ==0)
+				if (BootEventInfo.hnsCreateSytem_Start_begin ==0 && !gbStarted)
 				{
 					printf("HcsRpC_CreateSystem_Start\n");
 					BootEventInfo.hnsCreateSytem_Start_begin = timestamp * 100;
+					gbStarted = true;
 				}
 				break;
 			case EventId_HcsRpC_CreateSystem_End:
-				if (BootEventInfo.hnsCreateSytem_Start_end == 0)
+				if (BootEventInfo.hnsCreateSytem_Start_end == 0  && gbStarted)
 				{
 					printf("EventId_HcsRpC_CreateSystem_End\n");
 					BootEventInfo.hnsCreateSytem_Start_end = timestamp * 100;
+					gbStarted = false;
 				}
 				break;
 			case EventId_UtilityVm_Start_begin:
-				if (BootEventInfo.hnsUtilityVM_Start_begin == 0)
+				if (BootEventInfo.hnsUtilityVM_Start_begin == 0 && gbStarted)
 				{
 					printf("EventId_UtilityVm_Start_begin\n");
 					BootEventInfo.hnsUtilityVM_Start_begin = timestamp * 100;
 				}
 				break;
 			case EventId_UtilityVm_Start_end:
-				if (BootEventInfo.hnsUtilityVM_Start_end == 0)
+				if (BootEventInfo.hnsUtilityVM_Start_end == 0 && gbStarted)
 				{
 					printf("EventId_UtilityVm_Start_end\n");
 					BootEventInfo.hnsUtilityVM_Start_end = timestamp * 100;
 				}
 				break;
 			case EventId_UtilityVm_ConnectToGuestService_being:
-				if (BootEventInfo.hnsConnectToGCS_begin == 0)
+				if (BootEventInfo.hnsConnectToGCS_begin == 0 && gbStarted)
 				{
 					printf("EventId_UtilityVm_ConnectToGuestService_being\n");
 					BootEventInfo.hnsConnectToGCS_begin = timestamp * 100;
 				}
 				break;
 			case EventId_UtilityVm_ConnectToGuestService_end:
-				if (BootEventInfo.hnsConnectToGCS_end == 0)
+				if (BootEventInfo.hnsConnectToGCS_end == 0 && gbStarted)
 				{
 					printf("EventId_UtilityVm_ConnectToGuestService_end\n");
 					BootEventInfo.hnsConnectToGCS_end = timestamp * 100;
 				}
 				break;
 			case EventId_HcsRpC_StartSystem_Start:
-				if (BootEventInfo.hnsHcsStartSystem_begin == 0)
+				if (BootEventInfo.hnsHcsStartSystem_begin == 0 && gbStarted)
 				{
 					printf("EventId_HcsRpC_StartSystem_Start\n");
 					BootEventInfo.hnsHcsStartSystem_begin = timestamp * 100;
 				}
 				break;
 			case EventId_HcsRpC_StartSystem_End:
-				if (BootEventInfo.hnsHcsStartSystem_end == 0)
+				if (BootEventInfo.hnsHcsStartSystem_end == 0 && gbStarted)
 				{
 					BootEventInfo.hnsHcsStartSystem_end = timestamp * 100;
 					printf("EventId_HcsRpC_StartSystem_End\n");
 				}
 				break;
 			case EventId_HcsRpC_CreateProcess_Start:
-				if (BootEventInfo.hnsHcsCreateProcess_begin == 0)
+				if (BootEventInfo.hnsHcsCreateProcess_begin == 0 && gbStarted)
 				{
 					printf("EventId_HcsRpC_CreateProcess_Start\n");
 					BootEventInfo.hnsHcsCreateProcess_begin = timestamp * 100;
 				}
 				break;
 			case EventId_HcsRpC_CreateProcess_End:
-				if (BootEventInfo.hnsHcsCreateProcess_end == 0)
+				if (BootEventInfo.hnsHcsCreateProcess_end == 0 && gbStarted)
 				{
 					printf("EventId_HcsRpC_CreateProcess_End\n");
 					BootEventInfo.hnsHcsCreateProcess_end = timestamp * 100;
@@ -298,9 +301,9 @@ VOID WINAPI ProcessEvent(PEVENT_RECORD pEvent)
 	{
 		LONGLONG timestamp = pEvent->EventHeader.TimeStamp.QuadPart - g_hnsFirstEventTraceStartTime;
 
-		if (pInfo->EventDescriptor.Id == EventId_ExitBootServices)
+		if (pInfo->EventDescriptor.Id == EventId_ExitBootServices )
 		{
-			if (BootEventInfo.hnsHcsCreateProcess_end == 0)
+			if (BootEventInfo.hnsExitBootServices == 0 && gbStarted)
 			{
 				printf("EventId_ExitBootServices\n");
 				BootEventInfo.hnsExitBootServices = timestamp * 100;

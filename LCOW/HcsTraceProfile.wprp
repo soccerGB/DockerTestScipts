@@ -13,7 +13,21 @@
       <Keywords>
         <Keyword Value="Loader" />
         <Keyword Value="ProcessThread" />
+        <Keyword Value="CSwitch"/>
+        <Keyword Value="DiskIO"/>
+        <Keyword Value="FileIO"/>
+        <Keyword Value="FileIOInit"/>
+        <Keyword Value="HardFaults"/>
+        <Keyword Value="MemoryInfo"/>
+        <Keyword Value="MemoryInfoWS"/>
+        <Keyword Value="SampledProfile"/>
+        <Keyword Value="ReadyThread" />
       </Keywords>
+        <Stacks>
+            <Stack Value="CSwitch"/>
+            <Stack Value="SampledProfile" />
+            <Stack Value="ReadyThread" />
+        </Stacks>
     </SystemProvider>
     <EventProvider Id="HCS_NoTransport_Provider" Name="80CE50DE-D264-4581-950D-ABADEEE0D340" Level="6">
       <Keywords>
