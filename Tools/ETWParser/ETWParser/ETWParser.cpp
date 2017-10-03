@@ -110,7 +110,9 @@ void printResult()
 	wprintf(L"HcsCreateSytemDuration:  %10I64d\n", (BootEventInfo.hnsCreateSytem_Start_end - BootEventInfo.hnsCreateSytem_Start_begin)/1000000);
 
 	// total time from run to prompt
-	wprintf(L"TotalHCSTime:            %10I64d\n", (BootEventInfo.hnsHcsCreateProcess_end - BootEventInfo.hnsCreateSytem_Start_begin)/1000000);
+	wprintf(L"TotalHCSTime:            %10I64d\n", (((BootEventInfo.hnsCreateSytem_Start_end - BootEventInfo.hnsCreateSytem_Start_begin)  +
+												     (BootEventInfo.hnsHcsStartSystem_end - BootEventInfo.hnsHcsStartSystem_begin) + 
+												     (BootEventInfo.hnsHcsCreateProcess_end - BootEventInfo.hnsHcsCreateProcess_begin)) / 1000000));
 }
 
 void main(int argc, char* argv[])
@@ -264,28 +266,28 @@ VOID WINAPI ProcessEvent(PEVENT_RECORD pEvent)
 				}
 				break;
 			case EventId_HcsRpC_StartSystem_Start:
-				if (BootEventInfo.hnsHcsStartSystem_begin == 0 && gbStarted)
+				//if (BootEventInfo.hnsHcsStartSystem_begin == 0)
 				{
 					printf("EventId_HcsRpC_StartSystem_Start\n");
 					BootEventInfo.hnsHcsStartSystem_begin = timestamp * 100;
 				}
 				break;
 			case EventId_HcsRpC_StartSystem_End:
-				if (BootEventInfo.hnsHcsStartSystem_end == 0 && gbStarted)
+				//if (BootEventInfo.hnsHcsStartSystem_end == 0)
 				{
 					BootEventInfo.hnsHcsStartSystem_end = timestamp * 100;
 					printf("EventId_HcsRpC_StartSystem_End\n");
 				}
 				break;
 			case EventId_HcsRpC_CreateProcess_Start:
-				if (BootEventInfo.hnsHcsCreateProcess_begin == 0 && gbStarted)
+				//if (BootEventInfo.hnsHcsCreateProcess_begin == 0)
 				{
 					printf("EventId_HcsRpC_CreateProcess_Start\n");
 					BootEventInfo.hnsHcsCreateProcess_begin = timestamp * 100;
 				}
 				break;
 			case EventId_HcsRpC_CreateProcess_End:
-				if (BootEventInfo.hnsHcsCreateProcess_end == 0 && gbStarted)
+				//if (BootEventInfo.hnsHcsCreateProcess_end == 0)
 				{
 					printf("EventId_HcsRpC_CreateProcess_End\n");
 					BootEventInfo.hnsHcsCreateProcess_end = timestamp * 100;
