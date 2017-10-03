@@ -101,7 +101,7 @@ function SearchTimeStampByMarker (
              }
         }
         $TimeStampString = $TimeStampString -replace " ", ""
-        Write-Host "KernelBootTimeString:<$TimeStampString> "
+        Write-Host "Marker:<$TimeStampString> "
 
         $delim = "[","]"
         $resultArray = $TimeStampString -Split {$delim -contains $_}
@@ -198,7 +198,7 @@ function Runtest
         $UVMsBefore = Get-ComputeProcess
 
         $runContainerProc=Execute-AsynContainerCommand("run -itd --name $TestContainerName $TestImageName  sh")
-         Sleep 5 # make sure the container is running
+        Sleep 5 # make sure the container is running
 
 
         #
@@ -226,7 +226,7 @@ function Runtest
         $kernelModeBootEndTime = SearchTimeStampByMarker -Contents $DMESG_CONTENTS -Marker "user-init-started"
         Write-Host "kernelModeBootEndTime = $kernelModeBootEndTime ms"
 
-        $userModeBootEndTime = SearchTimeStampByMarker -Contents $DMESG_CONTENTS  -Marker "random: fast init done"
+        $userModeBootEndTime = SearchTimeStampByMarker -Contents $DMESG_CONTENTS  -Marker "user-init-ended"
         Write-Host "userModeBootTime = $($userModeBootEndTime - $kernelModeBootEndTime) ms"
 
         #stop container
@@ -234,7 +234,6 @@ function Runtest
 
         # wait until the running container to exit
         $runContainerProc.WaitForExit()
-        Write-Host  ("exitCode is" + $runContainerProc.ExitCode)
 
  
         Wpr.exe -stop $ETLLogFilename " Logfile for $TestImageName test run"
@@ -244,14 +243,15 @@ function Runtest
         $OperationTime.RemoveContainerTime = Execute-ContainerCommand ("docker rm " + $TestContainerName)
 
         #a separate run test
-        $OperationTime.RunContainerTime = Execute-ContainerCommand ("docker run --rm $TestImageName")
+        #$OperationTime.RunContainerTime = Execute-ContainerCommand ("docker run --rm $TestImageName")
 
         #remove image
+        Sleep 5
         $OperationTime.RemoveImageTime = Execute-ContainerCommand ("docker rmi -f " + $TestImageName)
 
         #analyze HCS ETL file for duration breakdown
         $Durationtable = ParseHCSTrace -HCSLogFile $ETLLogFilename
-        #Remove-Item $ETLLogFilename
+        Remove-Item $ETLLogFilename
 
         $Durationtable["KernelModeBootDuration"] = $kernelModeBootEndTime
         $Durationtable["UserModeBootTime"] = $userModeBootEndTime - $kernelModeBootEndTime
@@ -279,7 +279,7 @@ $dockerVersion = docker version
 Write-OUtput $dockerVersion
 
 
-    $testCount=100
+    $testCount=5
     $totalTimeK=0
     $totalTimeU=0
 
@@ -291,7 +291,7 @@ Write-OUtput $dockerVersion
 
     for ($i=0; $i -lt $testCount; $i++)
     {
-        Write-Host "i= $i"
+        Write-Host "Run iteration= $i"
         $table = Runtest -TestImageName "ubuntu" -ETLLogFilename "HcsTrace$i.etl"
         foreach ($item in $table.Keys.GetEnumerator())
         {
