@@ -280,14 +280,14 @@ VOID WINAPI ProcessEvent(PEVENT_RECORD pEvent)
 				}
 				break;
 			case EventId_HcsRpC_CreateProcess_Start:
-				//if (BootEventInfo.hnsHcsCreateProcess_begin == 0)
+				if (BootEventInfo.hnsHcsCreateProcess_begin == 0)
 				{
 					printf("EventId_HcsRpC_CreateProcess_Start\n");
 					BootEventInfo.hnsHcsCreateProcess_begin = timestamp * 100;
 				}
 				break;
 			case EventId_HcsRpC_CreateProcess_End:
-				//if (BootEventInfo.hnsHcsCreateProcess_end == 0)
+				if (BootEventInfo.hnsHcsCreateProcess_end == 0)
 				{
 					printf("EventId_HcsRpC_CreateProcess_End\n");
 					BootEventInfo.hnsHcsCreateProcess_end = timestamp * 100;
