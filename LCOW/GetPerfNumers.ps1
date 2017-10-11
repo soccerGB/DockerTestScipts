@@ -242,16 +242,13 @@ function Runtest
         #remove container
         $OperationTime.RemoveContainerTime = Execute-ContainerCommand ("docker rm " + $TestContainerName)
 
-        #a separate run test
-        #$OperationTime.RunContainerTime = Execute-ContainerCommand ("docker run --rm $TestImageName")
-
         #remove image
         Sleep 5
         $OperationTime.RemoveImageTime = Execute-ContainerCommand ("docker rmi -f " + $TestImageName)
 
         #analyze HCS ETL file for duration breakdown
         $Durationtable = ParseHCSTrace -HCSLogFile $ETLLogFilename
-        Remove-Item $ETLLogFilename
+        #Remove-Item $ETLLogFilename
 
         $Durationtable["KernelModeBootDuration"] = $kernelModeBootEndTime
         $Durationtable["UserModeBootTime"] = $userModeBootEndTime - $kernelModeBootEndTime
@@ -279,7 +276,7 @@ $dockerVersion = docker version
 Write-OUtput $dockerVersion
 
 
-    $testCount=5
+    $testCount=100
     $totalTimeK=0
     $totalTimeU=0
 
