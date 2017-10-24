@@ -47,11 +47,11 @@
       - az group create --name soccerl-rs3 --location westus2
       - az storage account create --resource-group soccerl-rs3 --location westus2 --name soccerlstorage --kind Storage --sku Standard_LRS
           Get the value of the account-key (key1) from the following for use in the later commands        
-      az storage account keys list --resource-group soccerl-rs3 --account-name soccerlstorage
+      - az storage account keys list --resource-group soccerl-rs3 --account-name soccerlstorage
             [{
                 "keyName": "key1",
                 "permissions": "Full",
-                "value": "I/lwrXa582/7ffAJ1XX5noaNDw23Uh3YmXfnI1JR0ivcfHd9pXZ2ktktaq0nAlP8DHy6xdM7vod7gHBOPr9ymw=="
+                "value": "rTcJclTkQQTXXJzyTi3zXPCrCqzzOdoNF8NM7eecGyC+Tr1iayLACkKTy8h47nQeyPJSWWURzh6zWqn9LOhTmQ=="
               },
               {
                 "keyName": "key2",
@@ -60,14 +60,14 @@
               }
             ]
       
-      - az storage container create -n rs3container --account-name soccerlstorage --account-key "I/lwrXa582/7ffAJ1XX5noaNDw23Uh3YmXfnI1JR0ivcfHd9pXZ2ktktaq0nAlP8DHy6xdM7vod7gHBOPr9ymw=="
+      - az storage container create -n rs3container --account-name soccerlstorage --account-key "rTcJclTkQQTXXJzyTi3zXPCrCqzzOdoNF8NM7eecGyC+Tr1iayLACkKTy8h47nQeyPJSWWURzh6zWqn9LOhTmQ=="
 
-      - az storage blob upload --account-name soccerlstorage --account-key "I/lwrXa582/7ffAJ1XX5noaNDw23Uh3YmXfnI1JR0ivcfHd9pXZ2ktktaq0nAlP8DHy6xdM7vod7gHBOPr9ymw==" --container-name rs3container --type page --file ./AzureWindowsRS3.vhd --name AzureWindowsRS3.vhd
+      - az storage blob upload --account-name soccerlstorage --account-key "rTcJclTkQQTXXJzyTi3zXPCrCqzzOdoNF8NM7eecGyC+Tr1iayLACkKTy8h47nQeyPJSWWURzh6zWqn9LOhTmQ==" --container-name rs3container --type page --file ./AzureWindowsRS3.vhd --name AzureWindowsRS3.vhd
 
-      - az storage blob url    --account-name soccerlstorage --account-key "I/lwrXa582/7ffAJ1XX5noaNDw23Uh3YmXfnI1JR0ivcfHd9pXZ2ktktaq0nAlP8DHy6xdM7vod7gHBOPr9ymw==" --container-name rs3container --name AzureWindowsRS3.vhd
+      - az storage blob url    --account-name soccerlstorage --account-key "rTcJclTkQQTXXJzyTi3zXPCrCqzzOdoNF8NM7eecGyC+Tr1iayLACkKTy8h47nQeyPJSWWURzh6zWqn9LOhTmQ==" --container-name rs3container --name AzureWindowsRS3.vhd
 
       - az disk create --resource-group soccerl-rs3 --name rs3disk --source "https://soccerlstorage.blob.core.windows.net/rs3container/AzureWindowsRS3.vhd"
 
-      - az vm create --resource-group soccerl-rs3  --location westus2 --name wrs3vm --os-type windows --attach-os-disk rs3disk
+      - az vm create --resource-group soccerl-rs3  --location westus2 --name wrs3vm --os-type windows --attach-os-disk rs3disk --size Standard_D2s_v3
 
 After the the VM is successfully created, you would need to wait a few minutes for the Windows to fully boot before you could to the Azure portal to remote-desktop to it successfully (eg  mstsc.exe /v:52.219.2.2 )
