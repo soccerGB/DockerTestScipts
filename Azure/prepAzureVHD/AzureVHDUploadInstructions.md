@@ -56,6 +56,7 @@
       - az storage account create --resource-group soccerl-rs3 --location westus2 --name soccerlstorage --kind Storage --sku Standard_LRS
           Get the value of the account-key (key1) from the following for use in the later commands        
       - az storage account keys list --resource-group soccerl-rs3 --account-name soccerlstorage
+      
             [{
                 "keyName": "key1",
                 "permissions": "Full",
