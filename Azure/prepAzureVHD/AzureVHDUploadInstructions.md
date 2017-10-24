@@ -30,7 +30,7 @@
       - Install-Package Docker -ProviderName DockerProvider -Force
       ( you might need to add an external network interface to enable access to internet for downloading files)
 
-   - Pull nanoserver and windowservercore images to the system
+   - Pull microsoft/nanoserver:1709 and microsoft/windowservercore:1709 images to the system
    - Generalize the image using sysprep tool
       Run "c:\windows\system32\sysprep\sysprep.exe /generalize /oobe /shutdown" to [sysprep] (https://docs.microsoft.com/en-us/azure/virtual-machines/windows/classic/createupload-vhd) a VHD  
       
@@ -38,7 +38,7 @@
 
       The output image will be named Azure+"WindowsRS3.vhd" in the current directory
    
-      If you decide to skip the image generating process from step 1-3, you can get a copy of what I used in  https://soccerlstorage.blob.core.windows.net/rs3container/WindowsServer2016Insider.vhd
+      If you decide to skip the image generating process from step 1-3, you can get a copy of what I used in  https://soccerlstorage.blob.core.windows.net/rs3container/AzureWindowsRS3.vhd
    
 4. Upload to the Azure
 
