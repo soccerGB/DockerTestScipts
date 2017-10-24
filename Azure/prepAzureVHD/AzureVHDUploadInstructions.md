@@ -2,12 +2,13 @@
 
 1. Get a windows image in VHD format
 
-      eg. \\winbuilds\release\RS3_RELEASE\16299.15.170928-1534\amd64fre\vhd\vhd_server_serverdatacenter_en-us_vl
-
+      You can get from a place like \\winbuilds\release\RS3_RELEASE\16299.15.170928-1534\amd64fre\vhd\vhd_server_serverdatacenter_en-us_vl
+     
+      copy it to a local directory. eg c:\temp, let say it's named WindowsRS3.vhd
+      
 2. Resize VHD and make it bootable 
    
-   - copy unattended.xml and MakeWindowsVHDBootable.ps1 from https://github.com/soccerGB/Tools/tree/master/Azure/prepAzureVHD repro to your local directory
-    (eg D:\github\Tools\Azure\prepAzureVHD)
+   - copy unattended.xml and MakeWindowsVHDBootable.ps1 from https://github.com/soccerGB/Tools/tree/master/Azure/prepAzureVHD repro to your local directory (eg c:\temp)  
 
    - In an elevated powershell windows, run the following script to generate a bootable VHD:
      PS D:\github\Tools\Azure\prepAzureVHD> ./MakeWindowsVHDBootable.ps1 WindowsRS3.vhd
@@ -69,5 +70,4 @@
 
       - az vm create --resource-group soccerl-rs3  --location westus2 --name wrs3vm --os-type windows --attach-os-disk rs3disk
 
-After the the VM is successfully created, you would need to wait a few minutes for the Windows to fully boot before you could 
-successfully remote-desktop to it (eg  mstsc.exe /v:52.219.2.2 )
+After the the VM is successfully created, you would need to wait a few minutes for the Windows to fully boot before you could to the Azure portal to remote-desktop to it successfully (eg  mstsc.exe /v:52.219.2.2 )
