@@ -1,3 +1,4 @@
+# How to prepare and upload a Windows VHD file for use in an Azure VM 
 
 1. Get a windows image in VHD format
 
@@ -32,39 +33,41 @@
    
 4. Upload to the Azure
 
-   The following information is what I used in my example on Azure CLI 2.0
+   Install [Azure CLI2.0] (https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)
+   
+   Assuming you have an existing Azure subscription, the following information is what I used in my example on Azure CLI 2.0
    - resource group name: soccerl-rs3 
    - storage account name:soccerlstorage
    - storage container name:rs3container 
    - blob name:AzureWindowsRS3.vhd
    - disk name:rs3disk
 
-   az login
-   az group create --name soccerl-rs3 --location westus2
-   az storage account create --resource-group soccerl-rs3 --location westus2 --name soccerlstorage --kind Storage --sku Standard_LRS
-   Get the value of the account-key (key1) from the following for use in the later commands        
-   C:\OSImages>az storage account keys list --resource-group soccerl-rs3 --account-name soccerlstorage
-      [{
-          "keyName": "key1",
-          "permissions": "Full",
-          "value": "I/lwrXa582/7ffAJ1XX5noaNDw23Uh3YmXfnI1JR0ivcfHd9pXZ2ktktaq0nAlP8DHy6xdM7vod7gHBOPr9ymw=="
-        },
-        {
-          "keyName": "key2",
-          "permissions": "Full",
-          "value": "TtupCz96vmfi42a6iTbEl8nwsN3o8thS3aBnSgCBkYNchJ+OFrHsTsVE1loeCggcSdRhPdEBMh1bAU+5GXOtHw=="
-        }
-      ]
+      - az login
+      - az group create --name soccerl-rs3 --location westus2
+      - az storage account create --resource-group soccerl-rs3 --location westus2 --name soccerlstorage --kind Storage --sku Standard_LRS
+          Get the value of the account-key (key1) from the following for use in the later commands        
+      az storage account keys list --resource-group soccerl-rs3 --account-name soccerlstorage
+            [{
+                "keyName": "key1",
+                "permissions": "Full",
+                "value": "I/lwrXa582/7ffAJ1XX5noaNDw23Uh3YmXfnI1JR0ivcfHd9pXZ2ktktaq0nAlP8DHy6xdM7vod7gHBOPr9ymw=="
+              },
+              {
+                "keyName": "key2",
+                "permissions": "Full",
+                "value": "TtupCz96vmfi42a6iTbEl8nwsN3o8thS3aBnSgCBkYNchJ+OFrHsTsVE1loeCggcSdRhPdEBMh1bAU+5GXOtHw=="
+              }
+            ]
+      
+      - az storage container create -n rs3container --account-name soccerlstorage --account-key "I/lwrXa582/7ffAJ1XX5noaNDw23Uh3YmXfnI1JR0ivcfHd9pXZ2ktktaq0nAlP8DHy6xdM7vod7gHBOPr9ymw=="
 
-   az storage container create -n rs3container --account-name soccerlstorage --account-key "I/lwrXa582/7ffAJ1XX5noaNDw23Uh3YmXfnI1JR0ivcfHd9pXZ2ktktaq0nAlP8DHy6xdM7vod7gHBOPr9ymw=="
+      - az storage blob upload --account-name soccerlstorage --account-key "I/lwrXa582/7ffAJ1XX5noaNDw23Uh3YmXfnI1JR0ivcfHd9pXZ2ktktaq0nAlP8DHy6xdM7vod7gHBOPr9ymw==" --container-name rs3container --type page --file ./AzureWindowsRS3.vhd --name AzureWindowsRS3.vhd
 
-az storage blob upload --account-name soccerlstorage --account-key "I/lwrXa582/7ffAJ1XX5noaNDw23Uh3YmXfnI1JR0ivcfHd9pXZ2ktktaq0nAlP8DHy6xdM7vod7gHBOPr9ymw==" --container-name rs3container --type page --file ./AzureWindowsRS3.vhd --name AzureWindowsRS3.vhd
+      - az storage blob url    --account-name soccerlstorage --account-key "I/lwrXa582/7ffAJ1XX5noaNDw23Uh3YmXfnI1JR0ivcfHd9pXZ2ktktaq0nAlP8DHy6xdM7vod7gHBOPr9ymw==" --container-name rs3container --name AzureWindowsRS3.vhd
 
-az storage blob url    --account-name soccerlstorage --account-key "I/lwrXa582/7ffAJ1XX5noaNDw23Uh3YmXfnI1JR0ivcfHd9pXZ2ktktaq0nAlP8DHy6xdM7vod7gHBOPr9ymw==" --container-name rs3container --name AzureWindowsRS3.vhd
+      - az disk create --resource-group soccerl-rs3 --name rs3disk --source "https://soccerlstorage.blob.core.windows.net/rs3container/AzureWindowsRS3.vhd"
 
-az disk create --resource-group soccerl-rs3 --name rs3disk --source "https://soccerlstorage.blob.core.windows.net/rs3container/AzureWindowsRS3.vhd"
-
-az vm create --resource-group soccerl-rs3  --location westus2 --name wrs3vm --os-type windows --attach-os-disk rs3disk
+      - az vm create --resource-group soccerl-rs3  --location westus2 --name wrs3vm --os-type windows --attach-os-disk rs3disk
 
 After the the VM is successfully created, you would need to wait a few minutes for the Windows to fully boot before you could 
 successfully remote-desktop to it (eg  mstsc.exe /v:52.219.2.2 )
