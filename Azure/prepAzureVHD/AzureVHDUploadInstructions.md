@@ -1,4 +1,3 @@
-# How to prepare and upload a Windows VHD file for use in an Azure VM
 
 1. Get a windows image in VHD format
 
@@ -20,15 +19,17 @@
   
 3. Prep Windows VHD image for Azure
   
-   a.Connect to the "vmname" VM from the Hyper-V Manager
-   b.Enable remote desktop connection for the machine
-   c. Generalize the image using sysprep tool
+   - Connect to the "vmname" VM from the Hyper-V Manager
+   - Enable remote desktop connection for the machine
+   - Generalize the image using sysprep tool
       Run "c:\windows\system32\sysprep\sysprep.exe /generalize /oobe /shutdown" to [sysprep] (https://docs.microsoft.com/en-us/azure/virtual-machines/windows/classic/createupload-vhd) a VHD  
       
-   d.You can delete the VM("vmname") from the Hyper-V Manager 
+   - You can delete the VM("vmname") from the Hyper-V Manager 
 
-   The output image will be named Azure+"WindowsRS3.vhd" in the current directory
-
+      The output image will be named Azure+"WindowsRS3.vhd" in the current directory
+   
+      If you decide to skip the image generating process from step 1-3, you can get a copy of what I used in  https://soccerlstorage.blob.core.windows.net/rs3container/WindowsServer2016Insider.vhd
+   
 4. Upload to the Azure
 
    The following information is what I used in my example on Azure CLI 2.0
