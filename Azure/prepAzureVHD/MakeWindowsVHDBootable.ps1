@@ -128,12 +128,13 @@ Try {
     Add-VMHardDiskDrive $vm -ControllerNumber 0 -ControllerLocation 0 -Path $vhdFullFilename
 
     Start-VM $vm
-    Write-Host -NoNewline "INFO: Waiting for VM to complete booting and re-sysprep: "
+    Write-Host -NoNewline "INFO: Waiting for VM to complete booting "
     while ($vm.State -ne "Running") {
         Write-host -NoNewline "."
         Start-Sleep -seconds 6
     }
 
+    Write-Host -NoNewline "Done. A new VM ($vmName) can be found in the Hyper-V Manager for your next step"
     #if ($vm -ne $null) {
     #    Write-Host "INFO: Starting the development VM. It will ask for creds in a few minutes..."
     #    Stop-VM $vm
