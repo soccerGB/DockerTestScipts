@@ -8,6 +8,7 @@
       
 2. Resize VHD and make it bootable 
    
+     Make sure you are running the following steps on a machine with Hyper-v feature enabled
    - copy unattended.xml and MakeWindowsVHDBootable.ps1 from https://github.com/soccerGB/Tools/tree/master/Azure/prepAzureVHD repro to your local directory (eg c:\temp)  
 
    - In an elevated powershell windows, run the following script to generate a bootable VHD:
@@ -23,6 +24,13 @@
   
    - Connect to the "vmname" VM from the Hyper-V Manager
    - Enable remote desktop connection for the machine
+   - Enable Hyper-V and Containers feature
+   - [Install Docker EE](https://docs.docker.com/engine/installation/windows/docker-ee/#install-docker-ee)
+      - Install-Module DockerProvider -Force
+      - Install-Package Docker -ProviderName DockerProvider -Force
+      ( you might need to add an external network interface to enable access to internet for downloading files)
+
+   - Pull nanoserver and windowservercore images to the system
    - Generalize the image using sysprep tool
       Run "c:\windows\system32\sysprep\sysprep.exe /generalize /oobe /shutdown" to [sysprep] (https://docs.microsoft.com/en-us/azure/virtual-machines/windows/classic/createupload-vhd) a VHD  
       

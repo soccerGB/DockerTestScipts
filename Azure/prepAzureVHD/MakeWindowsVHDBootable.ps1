@@ -32,12 +32,12 @@ Try {
         Stop-VM $vm -TurnOff
         Remove-VM $vm -Force
     }
-    Write-host "Expanding VHD size to 24 GB..."
+    Write-host "Expanding VHD size to 16 GB..."
     Copy-Item $inputVHDFileName $vhdFilename -Force
 
     Write-host "Copy file input vhd to a temp vhd... it will take a while..."
     # desired max VHD size : 128 GB"
-    $targetSize = 24*1024*1024*1024
+    $targetSize = 16*1024*1024*1024
     Write-host "VHD file nanme is $vhdFilename , vhdFullFilename = $vhdFullFilename"
   
     # Get the VHD size in GB, and resize to the target if not already
@@ -81,21 +81,6 @@ Try {
         Resize-Partition -DriveLetter $driveLetter -Size $maxSize
     }
 
-    # The entire repo of w2w (we need this for a dev-vm scenario - bootstrap.ps1 makes that decision
-    #Copy-Item ..\* "$driveletter`:\w2w" -Recurse -Force
-
-    # Put the bootstrap file additionally in \packer
-    #Copy-Item ..\common\Bootstrap.ps1 "$driveletter`:\packer\"
-
-    # Files for test-signing and copying privates
-    #Copy-Item "\\sesdfs\1windows\TestContent\CORE\Base\HYP\HAT\setup\testroot-sha2.cer" "$driveLetter`:\privates\"
-    #Copy-Item ("\\winbuilds\release\$branch\$build"+".$timestamp\amd64fre\test_automation_bins\idw\sfpcopy.exe") "$driveLetter`:\privates\"
-
-    # We need NuGet
-    #Write-Host "INFO: Installing NuGet package provider..."
-    #Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force | Out-Null
-
-
     Write-Host "Preparing VHD for unattended booting" 
     Write-Host "INFO: Creating unattend.xml"
     $unattend = Get-Content ".\unattend.xml"
@@ -134,7 +119,10 @@ Try {
         Start-Sleep -seconds 6
     }
 
-    Write-Host -NoNewline "Done. A new VM ($vmName) can be found in the Hyper-V Manager for your next step"
+    Write-Host -NoNewline "Done."
+    Write-Host -NoNewline "A new VM ($vmName) can be found in the Hyper-V Manager for your next step"
+    Write-Host -NoNewline "You can install additional software to the VHD via that VM if necessary"
+
     #if ($vm -ne $null) {
     #    Write-Host "INFO: Starting the development VM. It will ask for creds in a few minutes..."
     #    Stop-VM $vm
