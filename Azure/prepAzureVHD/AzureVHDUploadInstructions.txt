@@ -2,7 +2,7 @@
 #resource group name: soccerl-rs3 
 #storage account name:soccerlstorage
 #storage container name:rs3container 
-#blob name: WindowsRS3Fixed.vhd
+#blob name: AzureWindowsRS3.vhd
 #disk name:rs3disk
 
 az login
@@ -32,15 +32,13 @@ C:\OSImages>
 az storage container create -n rs3container --account-name soccerlstorage --account-key "I/lwrXa582/7ffAJ1XX5noaNDw23Uh3YmXfnI1JR0ivcfHd9pXZ2ktktaq0nAlP8DHy6xdM7vod7gHBOPr9ymw=="
 
 
+az storage blob upload --account-name soccerlstorage --account-key "I/lwrXa582/7ffAJ1XX5noaNDw23Uh3YmXfnI1JR0ivcfHd9pXZ2ktktaq0nAlP8DHy6xdM7vod7gHBOPr9ymw==" --container-name rs3container --type page --file ./AzureWindowsRS3.vhd --name AzureWindowsRS3.vhd
 
+az storage blob url    --account-name soccerlstorage --account-key "I/lwrXa582/7ffAJ1XX5noaNDw23Uh3YmXfnI1JR0ivcfHd9pXZ2ktktaq0nAlP8DHy6xdM7vod7gHBOPr9ymw==" --container-name rs3container --name AzureWindowsRS3.vhd
 
-az storage blob upload --account-name soccerlstorage --account-key "I/lwrXa582/7ffAJ1XX5noaNDw23Uh3YmXfnI1JR0ivcfHd9pXZ2ktktaq0nAlP8DHy6xdM7vod7gHBOPr9ymw==" --container-name rs3container --type page --file ./WindowsRS3Fixed.vhd --name WindowsRS3Fixed.vhd
+az disk create --resource-group soccerl-rs3 --name wrs3disk --source "https://soccerlstorage.blob.core.windows.net/rs3container/AzureWindowsRS3.vhd"
 
-az storage blob url    --account-name soccerlstorage --account-key "I/lwrXa582/7ffAJ1XX5noaNDw23Uh3YmXfnI1JR0ivcfHd9pXZ2ktktaq0nAlP8DHy6xdM7vod7gHBOPr9ymw==" --container-name rs3container --name WindowsRS3Fixed.vhd
-
-az disk create --resource-group soccerl-rs3 --name rs3disk --source "https://soccerlstorage.blob.core.windows.net/rs3container/WindowsRS3Fixed.vhd"
-
-az vm create --resource-group soccerl-rs3  --location westus2 --name windowsrs3vm --os-type windows --attach-os-disk rs3disk
+az vm create --resource-group soccerl-rs3  --location westus2 --name wrs3vm --os-type windows --attach-os-disk wrs3disk
 # --size standard_d2_v3
 #--storage-sku {Premium_LRS, Standard_GRS, Standard_LRS
 
