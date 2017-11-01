@@ -31,6 +31,11 @@
       ( you might need to add an external network interface to enable access to internet for downloading files)
 
    - Pull microsoft/nanoserver:1709 and microsoft/windowservercore:1709 images to the system
+   - [Install the VM Agent](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/agent-user-guide)
+     downalod VM Agent binary package before installing with the following command 
+     
+     msiexec.exe /i WindowsAzureVmAgent.2.7.1198.802.rd_art_stable.170327-1033.fre /quiet
+     
    - Generalize the image using sysprep tool
       Run "c:\windows\system32\sysprep\sysprep.exe /generalize /oobe /shutdown" to [sysprep] (https://docs.microsoft.com/en-us/azure/virtual-machines/windows/classic/createupload-vhd) a VHD  
       
