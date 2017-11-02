@@ -30,7 +30,7 @@
       - Install-Package Docker -ProviderName DockerProvider -Force
       ( you might need to add an external network interface to enable access to internet for downloading files)
 
-   - Pull microsoft/nanoserver:1709 and microsoft/windowservercore:1709 images to the system
+   - Pull microsoft/nanoserver:1709 and microsoft/windowsservercore:1709 images to the system
    - [Install the VM Agent](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/agent-user-guide)
      downalod VM Agent binary package before installing with the following command 
      
