@@ -24,6 +24,11 @@
   
    - Connect to the "vmname" VM from the Hyper-V Manager
    - Enable remote desktop connection for the machine
+   
+     Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server" -Name "fdenyTSXonnections" -Value 0
+     
+     Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+   
    - Enable Hyper-V and Containers feature
    - [Install Docker EE](https://docs.docker.com/engine/installation/windows/docker-ee/#install-docker-ee)
       - Install-Module DockerProvider -Force
