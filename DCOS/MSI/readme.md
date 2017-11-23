@@ -94,7 +94,7 @@
          172.24.44.201 - - [23/Nov/2017 08:37:39] "GET / HTTP/1.1" 200 -
 
 
-   
+  *Not*e: In this experiment, the proxy container's ip address (172.24.39.153) is used (hardcoded) inside the client container.Ideally, there will be some kind of setup script that handles converying this proxy address to client containers
 
 ## Launch a client container instance
 
@@ -151,7 +151,7 @@
 
 
 
-         C:\app>Netsh interface portproxy add v4tov4 listenaddress=169.254.169.254 listenport=80 connectaddress=`172.24.39.153` connectport=80  protocol=tcp
+         C:\app>Netsh interface portproxy add v4tov4 listenaddress=169.254.169.254 listenport=80 connectaddress=172.24.39.153 connectport=80  protocol=tcp
 
 
          C:\app>PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& Invoke-WebRequest -Uri "http://169.254.169.254" -Method GET -UseBasicParsing"
