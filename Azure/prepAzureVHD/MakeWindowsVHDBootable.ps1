@@ -17,8 +17,10 @@ Try {
     #$inputVHDFileName = "WindowsRS3.vhd"
     $vhdFilename = "TempAzure$inputVHDFileName"
     $azureVhdFilename = "Azure$inputVHDFileName"
+    Remove-Item $azureVhdFilename -force -ErrorAction SilentlyContinue
+    Remove-Item $vhdFilename -force -ErrorAction SilentlyContinue
 
-    Write-host "Input file:$vhdFilename, outputfile:$azureVhdFilename"
+    Write-host "Input file:$inputVHDFileName, outputfile:$azureVhdFilename"
  
     $workingDir = (Resolve-Path .\).Path
     $vhdFullFilename = (Join-Path $workingDir -ChildPath $vhdFilename)
@@ -32,12 +34,16 @@ Try {
         Stop-VM $vm -TurnOff
         Remove-VM $vm -Force
     }
-    Write-host "Expanding VHD size to 16 GB..."
-    Copy-Item $inputVHDFileName $vhdFilename -Force
-
+     Copy-Item $inputVHDFileName $vhdFilename -Force
+  <#
+    $targetVHDSizeinGB = 16
+    Write-host "Expanding VHD size to $targetVHDSizeinGB GB..."
+    
+ 
     Write-host "Copy file input vhd to a temp vhd... it will take a while..."
-    # desired max VHD size : 128 GB"
-    $targetSize = 16*1024*1024*1024
+    # desired max VHD size : $targetVHDSizeinGB GB"
+  
+    $targetSize = $targetVHDSizeinGB*1024*1024*1024
     Write-host "VHD file nanme is $vhdFilename , vhdFullFilename = $vhdFullFilename"
   
     # Get the VHD size in GB, and resize to the target if not already
@@ -53,7 +59,7 @@ Try {
         $size=($disk.size)
         Write-Host "INFO: New VHD disk size is $($size/1024/1024/1024) GB"
     }
-
+#>
     Write-Host "Coverting a dynamic VHD to fixed format"
     Convert-VHD -Path $vhdFilename -DestinationPath $azureVhdFilename -VHDType Fixed -DeleteSource
 
@@ -143,6 +149,8 @@ Finally {
         Write-Host "INFO: Dismounting VHD"
         Dismount-DiskImage $vhdFullFilename
     }
+    Remove-Item $azureVhdFilename -force -ErrorAction SilentlyContinue
+    Remove-Item $vhdFilename -force -ErrorAction SilentlyContinue
 
     Write-Host "INFO: Exiting at $(date)"
 }
