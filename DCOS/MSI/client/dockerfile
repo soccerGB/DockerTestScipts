@@ -1,0 +1,21 @@
+# Sample Client
+
+# Indicates that the windowsservercore image will be used as the base image.
+FROM microsoft/windowsservercore:1709
+
+# Set the working directory to /app
+WORKDIR /app
+
+# Copy the current directory contents into the container at /app
+ADD . /app
+
+#Execute a ps script to add address to the interface for setting up the 
+#Instance Metadata Service endpoint re-routing
+CMD .\setup.bat
+
+
+
+
+
+
+
