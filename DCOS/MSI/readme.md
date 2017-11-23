@@ -23,19 +23,19 @@
 
    You should have the following images in the "docker images" output
    
-   C:\DCOS\MSI>docker images
-   
-   REPOSITORY                    TAG                 IMAGE ID            CREATED             SIZE
-   
-   clientcontainer               latest              d97ff4d103d9        9 minutes ago       5.39GB
-   
-   proxycontainer                latest              5439c82fa6d2        22 hours ago        5.58GB
-   
-   pythonwindow1709              latest              4f24f5144bea        23 hours ago        5.55GB
-   
-   microsoft/windowsservercore   1709                fc3e0de7ea04        5 weeks ago         5.39GB
-   
-   microsoft/nanoserver          1709                33dcd52c91c3        5 weeks ago         236MB
+         C:\DCOS\MSI>docker images
+
+               REPOSITORY                    TAG                 IMAGE ID            CREATED             SIZE
+
+               clientcontainer               latest              d97ff4d103d9        9 minutes ago       5.39GB
+
+               proxycontainer                latest              5439c82fa6d2        22 hours ago        5.58GB
+
+               pythonwindow1709              latest              4f24f5144bea        23 hours ago        5.55GB
+
+               microsoft/windowsservercore   1709                fc3e0de7ea04        5 weeks ago         5.39GB
+
+               microsoft/nanoserver          1709                33dcd52c91c3        5 weeks ago         236MB
    
 ## Launch the proxy container instance
 
@@ -96,7 +96,7 @@
 
    
 
-## Launch the proxy container instance
+## Launch a client container instance
 
    C:\DCOS\MSI>docker run -it clientcontainer
 
