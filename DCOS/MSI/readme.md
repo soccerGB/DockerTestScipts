@@ -1,7 +1,7 @@
 
 # Experiments with redirecting Instance Metadata Service requests from a container to a external facing proxy container  
 
-## Building test images for running on the WindowsServerCore 1709
+## Building test images for running on the WindowsServerCore 1709 image
 
 1. Build a python image on top of for WindowsServerCore 1709
 
