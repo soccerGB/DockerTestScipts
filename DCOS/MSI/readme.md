@@ -25,10 +25,10 @@ This experiment was to find a way to access the Instance Metadata Service endpoi
       
 2. Build a client container image
 
-            There are a couple things that need to be setup in a client container
-            .Added 169.254.169.254 as a net ip address to the current network interface (see net.ps1)
+            There are a couple things that need to be setup in a client container  (see net.ps1)
+            .Added 169.254.169.254 as a net ip address to the current network interface
                   New-NetIPAddress -InterfaceIndex $ifIndex -IPAddress 169.254.169.254
-            .Added a port forwarding rule: from 169.254.169.254:80 to IMSProxyIpAddress:80 via Netsh tool (see setup.bat)
+            .Added a port forwarding rule: from 169.254.169.254:80 to IMSProxyIpAddress:80 via Netsh tool
                   Netsh interface portproxy add v4tov4 listenaddress=169.254.169.254 listenport=80 connectaddress=%IMSProxyIpAddress% connectport=80  protocol=tcp
 
       - cd client
