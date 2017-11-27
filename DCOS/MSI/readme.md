@@ -39,232 +39,152 @@
    
 ## Launch the proxy container instance
 
-   C:\DCOS\MSI>docker run -it proxycontainer
-   
-         // inside the container
-   
-         C:\app>PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& '.\setupproxynet.ps1'"
-         settig up a new route for the Instance Metadata Service
+      C:\DCOS\MSI> docker run -it proxycontainer
 
-         ifIndex DestinationPrefix                              NextHop                                  RouteMetric ifMetric PolicyStore
-         ------- -----------------                              -------                                  ----------- -------- -----------
-         23      169.254.169.254/32                             172.24.32.1                                      256 500      ActiveStore
-         23      169.254.169.254/32                             172.24.32.1                                      256          Persiste...
-         ===========================================================================
-         Interface List
-          22...........................Software Loopback Interface 2
-          23...00 15 5d e0 c1 fa ......Hyper-V Virtual Ethernet Adapter #2
-         ===========================================================================
+      C:\app>PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& '.\setupproxynet.ps1'"
+      settig up a new route for the Instance Metadata Service
 
-         IPv4 Route Table
-         ===========================================================================
-         Active Routes:
-         Network Destination        Netmask          Gateway       Interface  Metric
-                   0.0.0.0          0.0.0.0      172.24.32.1    172.24.39.153    756
-                 127.0.0.0        255.0.0.0         On-link         127.0.0.1    331
-                 127.0.0.1  255.255.255.255         On-link         127.0.0.1    331
-           127.255.255.255  255.255.255.255         On-link         127.0.0.1    331
-           169.254.169.254  255.255.255.255      172.24.32.1    172.24.39.153    756
-               172.24.32.0    255.255.240.0         On-link     172.24.39.153    756
-             172.24.39.153  255.255.255.255         On-link     172.24.39.153    756
-             172.24.47.255  255.255.255.255         On-link     172.24.39.153    756
-                 224.0.0.0        240.0.0.0         On-link         127.0.0.1    331
-                 224.0.0.0        240.0.0.0         On-link     172.24.39.153    756
-           255.255.255.255  255.255.255.255         On-link         127.0.0.1    331
-           255.255.255.255  255.255.255.255         On-link     172.24.39.153    756
-         ===========================================================================
-         Persistent Routes:
-           Network Address          Netmask  Gateway Address  Metric
-                   0.0.0.0          0.0.0.0      172.24.32.1  Default
-           169.254.169.254  255.255.255.255      172.24.32.1  Default
-         ===========================================================================
-         Testing access to the  Instance Metadata Service from the proxy container
-         Invoke-WebRequest -Uri http://169.254.169.254/metadata/instance?api-version=2017-04-02 -Method GET  -Headers {Metadata=True} -UseBasicParsing
+      ifIndex DestinationPrefix                              NextHop                                  RouteMetric ifMetric PolicyStore
+      ------- -----------------                              -------                                  ----------- -------- -----------
+      23      169.254.169.254/32                             172.24.32.1                                      256 500      ActiveStore
+      23      169.254.169.254/32                             172.24.32.1                                      256          Persiste...
+      ===========================================================================
+      Interface List
+       22...........................Software Loopback Interface 2
+       23...00 15 5d e0 c4 cd ......Hyper-V Virtual Ethernet Adapter #2
+      ===========================================================================
 
-         C:\app>python .\app.py
-          * Running on http://0.0.0.0:80/ (Press CTRL+C to quit)
-         client request connecting...
-         retrun from 169.254.169.254 endpoint ...
-         172.24.44.201 - - [23/Nov/2017 08:37:02] "GET / HTTP/1.1" 200 -
-         client request connecting...
-         retrun from 169.254.169.254 endpoint ...
-         172.24.44.201 - - [23/Nov/2017 08:37:30] "GET / HTTP/1.1" 200 -
-         client request connecting...
-         retrun from 169.254.169.254 endpoint ...
-         172.24.44.201 - - [23/Nov/2017 08:37:39] "GET / HTTP/1.1" 200 -
+      IPv4 Route Table
+      ===========================================================================
+      Active Routes:
+      Network Destination        Netmask          Gateway       Interface  Metric
+                0.0.0.0          0.0.0.0      172.24.32.1     172.24.32.64    756
+              127.0.0.0        255.0.0.0         On-link         127.0.0.1    331
+              127.0.0.1  255.255.255.255         On-link         127.0.0.1    331
+        127.255.255.255  255.255.255.255         On-link         127.0.0.1    331
+        169.254.169.254  255.255.255.255      172.24.32.1     172.24.32.64    756
+            172.24.32.0    255.255.240.0         On-link      172.24.32.64    756
+           172.24.32.64  255.255.255.255         On-link      172.24.32.64    756
+          172.24.47.255  255.255.255.255         On-link      172.24.32.64    756
+              224.0.0.0        240.0.0.0         On-link         127.0.0.1    331
+              224.0.0.0        240.0.0.0         On-link      172.24.32.64    756
+        255.255.255.255  255.255.255.255         On-link         127.0.0.1    331
+        255.255.255.255  255.255.255.255         On-link      172.24.32.64    756
+      ===========================================================================
+      Persistent Routes:
+        Network Address          Netmask  Gateway Address  Metric
+                0.0.0.0          0.0.0.0      172.24.32.1  Default
+        169.254.169.254  255.255.255.255      172.24.32.1  Default
+      ===========================================================================
+      Testing access to the  Instance Metadata Service from the proxy container
+      Invoke-WebRequest -Uri http://169.254.169.254/metadata/instance?api-version=2017-04-02 -Method GET  -Headers {Metadata=True} -UseBasicParsing
 
 
-  *Not*e: In this experiment, the proxy container's ip address (172.24.39.153) is used (hardcoded) inside the client container.Ideally, there will be some kind of setup script that handles converying this proxy address to client containers
+
+      C:\app>python .\app.py
+       * Running on http://0.0.0.0:80/ (Press CTRL+C to quit)
+
+
+  *Note*: In above experiment run, the proxy container's ip address is `172.24.32.64`. it will be used by client containers for forwarding instnace metadata to.
 
 ## Launch a client container instance
 
-   C:\DCOS\MSI>docker run -it clientcontainer
+- C:\DCOS\MSI>set IMSProxyIpAddress=`172.24.32.64`
+
+         do a 'set' to double check the environment was set correctly 
+         C:\DCOS\MSI>set
+         ....
+         IMSProxyIpAddress=172.24.32.64
+         ....
+
+
+- C:\DCOS\MSI>docker run -it -e IMSProxyIpAddress clientcontainer
 
          ============ inside the container ===============
 
-         Microsoft Windows [Version 10.0.16299.19]
-
          C:\app>PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& '.\net.ps1'"
-         adding 169.254.169.254 to network interface
-
-         IPAddress         : 169.254.169.254
-         InterfaceIndex    : 23
-         InterfaceAlias    : vEthernet (Ethernet)
-         AddressFamily     : IPv4
-         Type              : Unicast
-         PrefixLength      : 32
-         PrefixOrigin      : Manual
-         SuffixOrigin      : Manual
-         AddressState      : Tentative
-         ValidLifetime     : Infinite ([TimeSpan]::MaxValue)
-         PreferredLifetime : Infinite ([TimeSpan]::MaxValue)
-         SkipAsSource      : False
-         PolicyStore       : ActiveStore
-
-         IPAddress         : 169.254.169.254
-         InterfaceIndex    : 23
-         InterfaceAlias    : vEthernet (Ethernet)
-         AddressFamily     : IPv4
-         Type              : Unicast
-         PrefixLength      : 32
-         PrefixOrigin      : Manual
-         SuffixOrigin      : Manual
-         AddressState      : Invalid
-         ValidLifetime     : Infinite ([TimeSpan]::MaxValue)
-         PreferredLifetime : Infinite ([TimeSpan]::MaxValue)
-         SkipAsSource      : False
-         PolicyStore       : PersistentStore
+            adding 169.254.169.254 to network interface
 
 
-         Windows IP Configuration
+            IPAddress         : 169.254.169.254
+            InterfaceIndex    : 28
+            InterfaceAlias    : vEthernet (Ethernet) 2
+            AddressFamily     : IPv4
+            Type              : Unicast
+            PrefixLength      : 32
+            PrefixOrigin      : Manual
+            SuffixOrigin      : Manual
+            AddressState      : Tentative
+            ValidLifetime     : Infinite ([TimeSpan]::MaxValue)
+            PreferredLifetime : Infinite ([TimeSpan]::MaxValue)
+            SkipAsSource      : False
+            PolicyStore       : ActiveStore
+
+            IPAddress         : 169.254.169.254
+            InterfaceIndex    : 28
+            InterfaceAlias    : vEthernet (Ethernet) 2
+            AddressFamily     : IPv4
+            Type              : Unicast
+            PrefixLength      : 32
+            PrefixOrigin      : Manual
+            SuffixOrigin      : Manual
+            AddressState      : Invalid
+            ValidLifetime     : Infinite ([TimeSpan]::MaxValue)
+            PreferredLifetime : Infinite ([TimeSpan]::MaxValue)
+            SkipAsSource      : False
+            PolicyStore       : PersistentStore
+
+            wait for the network setting to be ready for use...
+
+            Windows IP Configuration
 
 
-         Ethernet adapter vEthernet (Ethernet):
+            Ethernet adapter vEthernet (Ethernet) 2:
 
-            Connection-specific DNS Suffix  . : 3xojbo1mt10efniqkq31gfg3ja.xx.internal.cloudapp.net
-            Link-local IPv6 Address . . . . . : fe80::a13e:82dc:c562:5edf%23
-            IPv4 Address. . . . . . . . . . . : 172.24.36.99
-            Subnet Mask . . . . . . . . . . . : 255.255.240.0
-            IPv4 Address. . . . . . . . . . . : 169.254.169.254
-            Subnet Mask . . . . . . . . . . . : 255.255.255.255
-            Default Gateway . . . . . . . . . : 172.24.32.1
-
-
-
-         C:\app>Netsh interface portproxy add v4tov4 listenaddress=169.254.169.254 listenport=80 connectaddress=172.24.39.153 connectport=80  protocol=tcp
-
-
-         C:\app>PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& Invoke-WebRequest -Uri "http://169.254.169.254" -Method GET -UseBasicParsing"
-
-
-         StatusCode        : 200
-         StatusDescription : OK
-         Content           : {"compute":{"location":"westus2","name":"26652acs900-vmss_1","offer":"WindowsServerSemiAnnual","osType":"Windows","platformFaultDom
-                             ain":"1","platformUpdateDomain":"1","publisher":"MicrosoftWindowsServ...
-         RawContent        : HTTP/1.0 200 OK
-                             Content-Length: 564
-                             Content-Type: text/html; charset=utf-8
-                             Date: Thu, 23 Nov 2017 07:54:55 GMT
-                             Server: Werkzeug/0.12.2 Python/3.7.0a2
-
-                             {"compute":{"location":"westus2","name":"26...
-         Forms             :
-         Headers           : {[Content-Length, 564], [Content-Type, text/html; charset=utf-8], [Date, Thu, 23 Nov 2017 07:54:55 GMT], [Server, Werkzeug/0.12.2
-                             Python/3.7.0a2]}
-         Images            : {}
-         InputFields       : {}
-         Links             : {}
-         ParsedHtml        :
-         RawContentLength  : 564
+               Connection-specific DNS Suffix  . : 3xojbo1mt10efniqkq31gfg3ja.xx.internal.cloudapp.net
+               Link-local IPv6 Address . . . . . : fe80::9c33:ef44:de14:62ab%28
+               IPv4 Address. . . . . . . . . . . : 172.24.45.178
+               Subnet Mask . . . . . . . . . . . : 255.255.240.0
+               IPv4 Address. . . . . . . . . . . : 169.254.169.254
+               Subnet Mask . . . . . . . . . . . : 255.255.255.255
+               Default Gateway . . . . . . . . . : 172.24.32.1
 
 
 
+            C:\app>echo 172.24.32.64
+            172.24.32.64
 
-         C:\app>cmd
-         ============
-
-
-         C:\app>PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& '.\net.ps1'"
-         adding 169.254.169.254 to network interface
+            C:\app>Netsh interface portproxy add v4tov4 listenaddress=169.254.169.254 listenport=80 connectaddress=172.24.32.64 connectport=80  protocol=tcp
 
 
-         IPAddress         : 169.254.169.254
-         InterfaceIndex    : 23
-         InterfaceAlias    : vEthernet (Ethernet)
-         AddressFamily     : IPv4
-         Type              : Unicast
-         PrefixLength      : 32
-         PrefixOrigin      : Manual
-         SuffixOrigin      : Manual
-         AddressState      : Tentative
-         ValidLifetime     : Infinite ([TimeSpan]::MaxValue)
-         PreferredLifetime : Infinite ([TimeSpan]::MaxValue)
-         SkipAsSource      : False
-         PolicyStore       : ActiveStore
-
-         IPAddress         : 169.254.169.254
-         InterfaceIndex    : 23
-         InterfaceAlias    : vEthernet (Ethernet)
-         AddressFamily     : IPv4
-         Type              : Unicast
-         PrefixLength      : 32
-         PrefixOrigin      : Manual
-         SuffixOrigin      : Manual
-         AddressState      : Invalid
-         ValidLifetime     : Infinite ([TimeSpan]::MaxValue)
-         PreferredLifetime : Infinite ([TimeSpan]::MaxValue)
-         SkipAsSource      : False
-         PolicyStore       : PersistentStore
+            C:\app>PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& Invoke-WebRequest -Uri "http://169.254.169.254" -Method GET -UseBasicParsing"
 
 
-         Windows IP Configuration
+            StatusCode        : 200
+            StatusDescription : OK
+            Content           : {"compute":{"location":"westus2","name":"26652acs900-vmss_1","offer":"WindowsServerSemiAnnual","osType":"Windows","platformFaultDomain":"1","platformUpdateDomain":"1","publi
+                                sher":"MicrosoftWindowsServ...
+            RawContent        : HTTP/1.0 200 OK
+                                Content-Length: 564
+                                Content-Type: text/html; charset=utf-8
+                                Date: Mon, 27 Nov 2017 19:04:28 GMT
+                                Server: Werkzeug/0.12.2 Python/3.7.0a2
 
-
-         Ethernet adapter vEthernet (Ethernet):
-
-            Connection-specific DNS Suffix  . : 3xojbo1mt10efniqkq31gfg3ja.xx.internal.cloudapp.net
-            Link-local IPv6 Address . . . . . : fe80::a13e:82dc:c562:5edf%23
-            IPv4 Address. . . . . . . . . . . : 172.24.36.99
-            Subnet Mask . . . . . . . . . . . : 255.255.240.0
-            IPv4 Address. . . . . . . . . . . : 169.254.169.254
-            Subnet Mask . . . . . . . . . . . : 255.255.255.255
-            Default Gateway . . . . . . . . . : 172.24.32.1
-
-
-
-         C:\app>Netsh interface portproxy add v4tov4 listenaddress=169.254.169.254 listenport=80 connectaddress=172.24.38.149 connectport=80  protocol=tcp
-
-
-         C:\app>PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& Invoke-WebRequest -Uri "http://169.254.169.254" -Method GET -UseBasicParsing"
-
-
-         StatusCode        : 200
-         StatusDescription : OK
-         Content           : {"compute":{"location":"westus2","name":"26652acs900-vmss_1","offer":"WindowsServerSemiAnnual","osType":"Windows","platformFaultDom
-                             ain":"1","platformUpdateDomain":"1","publisher":"MicrosoftWindowsServ...
-         RawContent        : HTTP/1.0 200 OK
-                             Content-Length: 564
-                             Content-Type: text/html; charset=utf-8
-                             Date: Thu, 23 Nov 2017 07:54:55 GMT
-                             Server: Werkzeug/0.12.2 Python/3.7.0a2
-
-                             {"compute":{"location":"westus2","name":"26...
-         Forms             :
-         Headers           : {[Content-Length, 564], [Content-Type, text/html; charset=utf-8], [Date, Thu, 23 Nov 2017 07:54:55 GMT], [Server, Werkzeug/0.12.2
-                             Python/3.7.0a2]}
-         Images            : {}
-         InputFields       : {}
-         Links             : {}
-         ParsedHtml        :
-         RawContentLength  : 564
+                                {"compute":{"location":"westus2","name":"26...
+            Forms             :
+            Headers           : {[Content-Length, 564], [Content-Type, text/html; charset=utf-8], [Date, Mon, 27 Nov 2017 19:04:28 GMT], [Server, Werkzeug/0.12.2 Python/3.7.0a2]}
+            Images            : {}
+            InputFields       : {}
+            Links             : {}
+            ParsedHtml        :
+            RawContentLength  : 564
 
 
 
 
-         C:\app>cmd
-         Microsoft Windows [Version 10.0.16299.19]
-         (c) 2017 Microsoft Corporation. All rights reserved.
+            C:\app>cmd
+            Microsoft Windows [Version 10.0.16299.19]
+            (c) 2017 Microsoft Corporation. All rights reserved.
 
-         C:\app>
-
+            C:\app>
 
