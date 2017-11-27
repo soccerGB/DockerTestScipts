@@ -9,19 +9,27 @@
 
       docker build -t pythonwindow1709 .
 
+3. Build a proxy container image
+
+            To make Instance Metadat Service acessible from the proxy container, add a new net route for 169.254.169.254 to the active netowrk interface( see setupproxynet.ps1 for details)
+      
+      cd proxy
+
+      docker build -t proxycontainer .
+      
 2. Build a client container image
+
+            There are a couple things that need to be setup in a client container
+            .Added 169.254.169.254 as a net ip address to the current network interface (see net.ps1)
+                  New-NetIPAddress -InterfaceIndex $ifIndex -IPAddress 169.254.169.254
+            .Added a port forwarding rule: from 169.254.169.254:80 to IMSProxyIpAddress:80 via Netsh tool (see setup.bat)
+                  Netsh interface portproxy add v4tov4 listenaddress=169.254.169.254 listenport=80 connectaddress=%IMSProxyIpAddress% connectport=80  protocol=tcp
 
       cd client
 
       docker build -t clientcontainer .
 
-3. Build a proxy container image
-
-      cd proxy
-
-      docker build -t proxycontainer .
-
-   You should have the following images in the "docker images" output
+You should have the following images in the "docker images" output
    
          C:\DCOS\MSI>docker images
 
@@ -38,7 +46,7 @@
                microsoft/nanoserver          1709                33dcd52c91c3        5 weeks ago         236MB
    
 ## Launch the proxy container instance
-   The proxy cotnainer is expected to get run first before launching any client containers which relies on the proxy for accessign Instance Metadata. A new IP route to the network interface for 169.254.169.254 in setupproxynet.ps1 for making the Instance Metadata Service work from the proxy cotnainer itself.
+   The proxy cotnainer is expected to get run first before launching any client containers which relies on the proxy for accessign Instance Metadata. A new IP route to the network interface for 169.254.169.254 in setupproxynet.ps1 for making the Instance Metadata Service work from the proxy cotnainer itself. Some debugging messages were added into the same ps1 script for debugging purpose
       
       C:\DCOS\MSI> docker run -it proxycontainer
 
@@ -90,6 +98,8 @@
 
 ## Launch a client container instance
 
+Once the proxy cotnainer is runnning successfully, use a environment vaiable (IMSProxyIpAddress) to pass the IP addess of the proxy container to client containers. 
+
 - C:\DCOS\MSI>set IMSProxyIpAddress=`172.24.32.64`
 
          do a 'set' to double check the environment was set correctly 
@@ -97,7 +107,6 @@
          ....
          IMSProxyIpAddress=172.24.32.64
          ....
-
 
 - C:\DCOS\MSI>docker run -it -e IMSProxyIpAddress clientcontainer
 
@@ -179,9 +188,6 @@
             Links             : {}
             ParsedHtml        :
             RawContentLength  : 564
-
-
-
 
             C:\app>cmd
             Microsoft Windows [Version 10.0.16299.19]
