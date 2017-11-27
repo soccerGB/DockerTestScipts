@@ -164,10 +164,9 @@ Once the proxy cotnainer is runnning successfully, use a environment vaiable (IM
             C:\app>echo 172.24.32.64
             172.24.32.64
             
-Test accessing Instance Matadata Service from inside a client container 
-
             C:\app>Netsh interface portproxy add v4tov4 listenaddress=169.254.169.254 listenport=80 connectaddress=172.24.32.64 connectport=80  protocol=tcp
 
+Test accessing Instance Matadata Service from inside a client container 
 
             C:\app>PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& Invoke-WebRequest -Uri "http://169.254.169.254" -Method GET -UseBasicParsing"
 
