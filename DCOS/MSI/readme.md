@@ -5,7 +5,7 @@ This experiment was to find a way to access the Instance Metadata Service endpoi
 
 ![Block diagram for Proxying Instance Metadata Service request](https://github.com/soccerGB/Tools/tree/master/DCOS/MSI/InstanceMetadata.png "Proxying Instance Metadata Service request")
 
-(note: in this setup, all containers are in the same subset)
+(Note: in this setup, all containers are in the same subset)
 
 ## Building test images for running on the WindowsServerCore 1709 image
 
