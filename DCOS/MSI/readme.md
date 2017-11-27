@@ -38,7 +38,8 @@
                microsoft/nanoserver          1709                33dcd52c91c3        5 weeks ago         236MB
    
 ## Launch the proxy container instance
-
+   The proxy cotnainer is expected to get run first before launching any client containers which relies on the proxy for accessign Instance Metadata. A new IP route to the network interface for 169.254.169.254 in setupproxynet.ps1 for making the Instance Metadata Service work from the proxy cotnainer itself.
+      
       C:\DCOS\MSI> docker run -it proxycontainer
 
       C:\app>PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& '.\setupproxynet.ps1'"
