@@ -5,17 +5,17 @@
 
 1. Build a python image on top of for WindowsServerCore 1709
 
-      cd pythonOn1709
+      - cd pythonOn1709
 
-      docker build -t pythonwindow1709 .
+      - docker build -t pythonwindow1709 .
 
 3. Build a proxy container image
 
             To make Instance Metadat Service acessible from the proxy container, add a new net route for 169.254.169.254 to the active netowrk interface( see setupproxynet.ps1 for details)
       
-      cd proxy
+      - cd proxy
 
-      docker build -t proxycontainer .
+      - docker build -t proxycontainer .
       
 2. Build a client container image
 
@@ -25,9 +25,9 @@
             .Added a port forwarding rule: from 169.254.169.254:80 to IMSProxyIpAddress:80 via Netsh tool (see setup.bat)
                   Netsh interface portproxy add v4tov4 listenaddress=169.254.169.254 listenport=80 connectaddress=%IMSProxyIpAddress% connectport=80  protocol=tcp
 
-      cd client
+      - cd client
 
-      docker build -t clientcontainer .
+      - docker build -t clientcontainer .
 
 You should have the following images in the "docker images" output
    
@@ -163,6 +163,8 @@ Once the proxy cotnainer is runnning successfully, use a environment vaiable (IM
 
             C:\app>echo 172.24.32.64
             172.24.32.64
+            
+Test accessing Instance Matadata Service from inside a client container 
 
             C:\app>Netsh interface portproxy add v4tov4 listenaddress=169.254.169.254 listenport=80 connectaddress=172.24.32.64 connectport=80  protocol=tcp
 
