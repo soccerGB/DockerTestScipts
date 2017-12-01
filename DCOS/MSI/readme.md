@@ -1,6 +1,6 @@
-#This directory has been moved to the following repo
+# This directory has been moved to the following location
       
-      https://github.com/soccerGB/MSIExperiment
+[New location](https://github.com/soccerGB/MSIExperiment)
       
       
       
