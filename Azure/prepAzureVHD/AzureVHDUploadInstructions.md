@@ -90,4 +90,4 @@
 
       - az vm create --resource-group soccerl-rs3  --location westus2 --name wrs3vm --os-type windows --attach-os-disk rs3disk --size Standard_D2s_v3
 
-After the the VM is successfully created, you would need to wait a few minutes for the Windows to fully boot before you could to the Azure portal to remote-desktop to it successfully (eg  mstsc.exe /v:52.219.2.2 )
+After the the VM is successfully created, you would need to wait a few minutes for the Windows to fully boot before you could go to the Azure portal to remote-desktop to it successfully (eg  mstsc.exe /v:52.219.2.2 )
