@@ -2,7 +2,7 @@
 
 1. Get a windows image in VHD format
 
-      You can get from a place like \\winbuilds\release\RS3_RELEASE\16299.15.170928-1534\amd64fre\vhd\vhd_server_serverdatacenter_en-us_vl
+      You can get from a place like ...\RS3_RELEASE\16299.15.170928-1534\amd64fre\vhd\vhd_server_serverdatacenter_en-us_vl
      
       copy it to a local directory. eg c:\temp, let say it's named WindowsRS3.vhd
       
