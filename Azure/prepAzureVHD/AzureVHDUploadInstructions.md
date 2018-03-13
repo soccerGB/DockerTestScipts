@@ -26,9 +26,14 @@
    - Connect to the "vmname" VM from the Hyper-V Manager
    - Enable remote desktop connection for the machine
    
-     Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server" -Name "fdenyTSXonnections" -Value 0
-     
-     Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+      You can do it in powershell:
+      
+            Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server" -Name "fdenyTSXonnections" -Value 0
+            Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+            
+     Or
+      
+       From UI in Control Panel\System and Security\System\Remote settings if it's for a build with UI
    
    - Enable Hyper-V and Containers feature
    - [Install Docker EE](https://docs.docker.com/engine/installation/windows/docker-ee/#install-docker-ee)
@@ -36,7 +41,13 @@
       - Install-Package Docker -ProviderName DockerProvider -Force
       ( you might need to add an external network interface to enable access to internet for downloading files)
 
-   - Pull microsoft/nanoserver:1709 and microsoft/windowsservercore:1709 images to the system
+   - Preload matching Docker servercore Docker container image to the VM
+   
+      eg:
+      Pull microsoft/nanoserver:1709 and microsoft/windowsservercore:1709 images to the system
+      
+      ps. For an internal build, you can find its servercore image in \amd64fre\containerbaseospkgs\cbaseospkg_serverdatacentercore_en-us
+   
    - Optional [Install the VM Agent](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/agent-user-guide)
      downalod VM Agent binary package before installing with the following command 
      
