@@ -38,6 +38,7 @@
    
    - Enable Hyper-V and Containers feature
    
+            Enable-WindowsOptionalFeature -Online -FeatureName containers –All
             Enable-WindowsOptionalFeature -Online -FeatureName:Microsoft-Hyper-V -All
 
    - [Install Docker EE](https://docs.docker.com/engine/installation/windows/docker-ee/#install-docker-ee)
