@@ -1,5 +1,6 @@
 # How to prepare and upload a Windows VHD file for use in an Azure VM 
 
+## How to prepare
 1. Get a windows image in VHD format
 
       This could be any windows builds.
@@ -60,9 +61,10 @@
 
       The output image will be named Azure+"WindowsRS3.vhd" in the current directory
    
-      If you decide to skip the image generating process from step 1-3, you can get a copy of what I used in  https://soccerlstorage.blob.core.windows.net/rs3container/AzureWindowsRS3.vhd
-   
-4. Upload to the Azure
+      If you decide to skip the image generating process from step 1-3, you can get a copy of what I used in [here](     
+      https://ms.portal.azure.com/#blade/Microsoft_Azure_Storage/ContainersBlade/storageAccountId/%2Fsubscriptions%2Fe5839dfd-61f0-4b2f-b06f-de7fc47b5998%2FresourceGroups%2Fsoccerl-storage%2Fproviders%2FMicrosoft.Storage%2FstorageAccounts%2Fsoccerlstorage)
+      
+## How Upload to the Azure 
 
    Install [Azure CLI2.0] (https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)
    
