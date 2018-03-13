@@ -2,11 +2,12 @@
 
 1. Get a windows image in VHD format
 
-      You can get from a place like ...\RS3_RELEASE\16299.15.170928-1534\amd64fre\vhd\vhd_server_serverdatacenter_en-us_vl
+      This could be any windows builds.
+      Eg: You can get it straight from a place like ...\RS3_RELEASE\16299.15.170928-1534\amd64fre\vhd\vhd_server_serverdatacenter_en-us_vl
      
-      copy it to a local directory. eg c:\temp, let say it's named WindowsRS3.vhd
+      Copy it to a local directory. eg c:\temp, let say it's named WindowsRS3.vhd
       
-2. Resize VHD and make it bootable 
+2. Make it a Fixed format VHD and make it bootable 
    
      Make sure you are running the following steps on a machine with Hyper-v feature enabled
    - copy unattended.xml and MakeWindowsVHDBootable.ps1 from https://github.com/soccerGB/Tools/tree/master/Azure/prepAzureVHD repro to your local directory (eg c:\temp)  
@@ -36,7 +37,7 @@
       ( you might need to add an external network interface to enable access to internet for downloading files)
 
    - Pull microsoft/nanoserver:1709 and microsoft/windowsservercore:1709 images to the system
-   - [Install the VM Agent](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/agent-user-guide)
+   - Optional [Install the VM Agent](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/agent-user-guide)
      downalod VM Agent binary package before installing with the following command 
      
      msiexec.exe /i WindowsAzureVmAgent.2.7.1198.802.rd_art_stable.170327-1033.fre /quiet
