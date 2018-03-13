@@ -37,6 +37,9 @@
        From UI in Control Panel\System and Security\System\Remote settings if it's for a build with UI
    
    - Enable Hyper-V and Containers feature
+   
+            Enable-WindowsOptionalFeature -Online -FeatureName:Microsoft-Hyper-V -All
+
    - [Install Docker EE](https://docs.docker.com/engine/installation/windows/docker-ee/#install-docker-ee)
       - Install-Module DockerProvider -Force
       - Install-Package Docker -ProviderName DockerProvider -Force
