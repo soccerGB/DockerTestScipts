@@ -40,6 +40,8 @@
    
             Enable-WindowsOptionalFeature -Online -FeatureName containers –All
             Enable-WindowsOptionalFeature -Online -FeatureName:Microsoft-Hyper-V -All
+            
+            ps: only reboot after activating the second feature.
 
    - [Install Docker EE](https://docs.docker.com/engine/installation/windows/docker-ee/#install-docker-ee)
       - Install-Module DockerProvider -Force
