@@ -55,7 +55,7 @@
       
       ps. For an internal build, you can find its servercore image in \amd64fre\containerbaseospkgs\cbaseospkg_serverdatacentercore_en-us
    
-   - Optional [Install the VM Agent](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/agent-user-guide)
+   - Optional step: [Install the VM Agent](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/agent-user-guide)
      downalod VM Agent binary package before installing with the following command 
      
      msiexec.exe /i WindowsAzureVmAgent.2.7.1198.802.rd_art_stable.170327-1033.fre /quiet
