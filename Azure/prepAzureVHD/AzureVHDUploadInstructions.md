@@ -46,6 +46,7 @@
    - [Install Docker EE](https://docs.docker.com/engine/installation/windows/docker-ee/#install-docker-ee)
       - Install-Module DockerProvider -Force
       - Install-Package Docker -ProviderName DockerProvider -Force
+      
       ( you might need to add an external network interface to enable access to internet for downloading files)
 
    - Preload matching Docker servercore Docker container image to the VM
