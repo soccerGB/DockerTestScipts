@@ -4,9 +4,9 @@
 ### 1. Get a windows image in VHD format
 
       This could be any windows builds.
-      Eg: You can get it straight from a place like ...\RS3_RELEASE\16299.15.170928-1534\amd64fre\vhd\vhd_server_serverdatacenter_en-us_vl
+      Eg: You can get it straight from a place like ...\release\rs4_release\17134.1.180410-1804\amd64fre\vhd\vhd_server_serverdatacenter_en-us
      
-      Copy it to a local directory. eg c:\temp, let say it's named WindowsRS3.vhd
+      Copy it to a local directory. eg c:\temp, let say it's named WindowsRS4.vhd
       
 ### 2. Make it a Fixed format VHD and make it bootable 
    
