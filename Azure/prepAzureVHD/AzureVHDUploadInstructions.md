@@ -83,15 +83,15 @@
    Install [Azure CLI2.0] (https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)
    
    Assuming you have an existing Azure subscription, the following information is what I used in my example on Azure CLI 2.0
-   - resource group name: soccerl-rs3 
+   - resource group name: soccerl-storage 
    - storage account name:soccerlstorage
-   - storage container name:rs3container 
-   - blob name:AzureWindowsRS3.vhd
-   - disk name:rs3disk
+   - storage container name:rs4container 
+   - blob name:AzureWindowsRS4.vhd
+   - disk name:rs4disk
 
       - az login
-      - az group create --name soccerl-rs3 --location westus2
-      - az storage account create --resource-group soccerl-rs3 --location westus2 --name soccerlstorage --kind Storage --sku Standard_LRS
+      - az group create --name soccerl-storage --location westus2
+      - az storage account create --resource-group soccerl-storage --location westus2 --name soccerlstorage --kind Storage --sku Standard_LRS
       
           Get the value of the account-key (key1) from the following for use in the later commands        
       - az storage account keys list --resource-group soccerl-rs3 --account-name soccerlstorage
@@ -108,14 +108,14 @@
               }
             ]
       
-      - az storage container create -n rs3container --account-name soccerlstorage --account-key "rTcJclTkQQTXXJzyTi3zXPCrCqzzOdoNF8NM7eecGyC+Tr1iayLACkKTy8h47nQeyPJSWWURzh6zWqn9LOhTmQ=="
+      - az storage container create -n rs4container --account-name soccerlstorage --account-key "rTcJclTkQQTXXJzyTi3zXPCrCqzzOdoNF8NM7eecGyC+Tr1iayLACkKTy8h47nQeyPJSWWURzh6zWqn9LOhTmQ=="
 
-      - az storage blob upload --account-name soccerlstorage --account-key "rTcJclTkQQTXXJzyTi3zXPCrCqzzOdoNF8NM7eecGyC+Tr1iayLACkKTy8h47nQeyPJSWWURzh6zWqn9LOhTmQ==" --container-name rs3container --type page --file ./AzureWindowsRS3.vhd --name AzureWindowsRS3.vhd
+      - az storage blob upload --account-name soccerlstorage --account-key "rTcJclTkQQTXXJzyTi3zXPCrCqzzOdoNF8NM7eecGyC+Tr1iayLACkKTy8h47nQeyPJSWWURzh6zWqn9LOhTmQ==" --container-name rs4container --type page --file ./AzureWindowsRS4.vhd --name AzureWindowsRS4.vhd
 
-      - az storage blob url    --account-name soccerlstorage --account-key "rTcJclTkQQTXXJzyTi3zXPCrCqzzOdoNF8NM7eecGyC+Tr1iayLACkKTy8h47nQeyPJSWWURzh6zWqn9LOhTmQ==" --container-name rs3container --name AzureWindowsRS3.vhd
+      - az storage blob url    --account-name soccerlstorage --account-key "rTcJclTkQQTXXJzyTi3zXPCrCqzzOdoNF8NM7eecGyC+Tr1iayLACkKTy8h47nQeyPJSWWURzh6zWqn9LOhTmQ==" --container-name rs4container --name AzureWindowsRS4.vhd
 
-      - az disk create --resource-group soccerl-rs3 --name rs3disk --source "https://soccerlstorage.blob.core.windows.net/rs3container/AzureWindowsRS3.vhd"
+      - az disk create --resource-group soccerl-storage --name rs4disk --source "https://soccerlstorage.blob.core.windows.net/rs3container/AzureWindowsRS4.vhd"
 
-      - az vm create --resource-group soccerl-rs3  --location westus2 --name wrs3vm --os-type windows --attach-os-disk rs3disk --size Standard_D2s_v3
+      - az vm create --resource-group soccerl-storage  --location westus2 --name wrs4vm --os-type windows --attach-os-disk rs4disk --size Standard_D2s_v3
 
 After the the VM is successfully created, you would need to wait a few minutes for the Windows to fully boot before you could go to the Azure portal to remote-desktop to it successfully (eg  mstsc.exe /v:52.219.2.2 )
