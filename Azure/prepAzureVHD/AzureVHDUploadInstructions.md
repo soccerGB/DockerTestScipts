@@ -1,14 +1,14 @@
 # How to prepare and upload a Windows VHD file for use in an Azure VM 
 
 ## How to prepare
-1. Get a windows image in VHD format
+### 1. Get a windows image in VHD format
 
       This could be any windows builds.
       Eg: You can get it straight from a place like ...\RS3_RELEASE\16299.15.170928-1534\amd64fre\vhd\vhd_server_serverdatacenter_en-us_vl
      
       Copy it to a local directory. eg c:\temp, let say it's named WindowsRS3.vhd
       
-2. Make it a Fixed format VHD and make it bootable 
+### 2. Make it a Fixed format VHD and make it bootable 
    
      Make sure you are running the following steps on a machine with Hyper-v feature enabled
    - copy unattended.xml and MakeWindowsVHDBootable.ps1 from https://github.com/soccerGB/Tools/tree/master/Azure/prepAzureVHD repro to your local directory (eg c:\temp)  
@@ -22,7 +22,7 @@
      - Username: administrator
      - Password: replacepassword1234$
   
-3. Prep Windows VHD image for Azure
+### 3. Prep Windows VHD image for Azure
   
    - Connect to the "vmname" VM from the Hyper-V Manager
    - Enable remote desktop connection for the machine
@@ -53,13 +53,13 @@
    
       eg:
       
-         on RS3: 
-            docker pull microsoft/nanoserver:1709
-            docker pull microsoft/windowsservercore:1709
-      
-         on RS4
-            docker pull microsoft/nanoserver:1803 
-            docker pull microsoft/windowsservercore:1803      
+               on RS3: 
+                  docker pull microsoft/nanoserver:1709
+                  docker pull microsoft/windowsservercore:1709
+
+               on RS4
+                  docker pull microsoft/nanoserver:1803 
+                  docker pull microsoft/windowsservercore:1803      
       
       ps. For an internal build, you can find its servercore image in \amd64fre\containerbaseospkgs\cbaseospkg_serverdatacentercore_en-us
    
