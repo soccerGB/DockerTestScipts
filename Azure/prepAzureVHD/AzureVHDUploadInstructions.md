@@ -94,7 +94,7 @@
       - az storage account create --resource-group soccerl-storage --location westus2 --name soccerlstorage --kind Storage --sku Standard_LRS
       
           Get the value of the account-key (key1) from the following for use in the later commands        
-      - az storage account keys list --resource-group soccerl-rs3 --account-name soccerlstorage
+      - az storage account keys list --resource-group soccerl-storage --account-name soccerlstorage
       
             [{
                 "keyName": "key1",
@@ -114,7 +114,7 @@
 
       - az storage blob url    --account-name soccerlstorage --account-key "rTcJclTkQQTXXJzyTi3zXPCrCqzzOdoNF8NM7eecGyC+Tr1iayLACkKTy8h47nQeyPJSWWURzh6zWqn9LOhTmQ==" --container-name rs4container --name AzureWindowsRS4.vhd
 
-      - az disk create --resource-group soccerl-storage --name rs4disk --source "https://soccerlstorage.blob.core.windows.net/rs3container/AzureWindowsRS4.vhd"
+      - az disk create --resource-group soccerl-storage --name rs4disk --source "https://soccerlstorage.blob.core.windows.net/rs4container/AzureWindowsRS4.vhd"
 
       - az vm create --resource-group soccerl-storage  --location westus2 --name wrs4vm --os-type windows --attach-os-disk rs4disk --size Standard_D2s_v3
 
