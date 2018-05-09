@@ -52,8 +52,15 @@
    - Preload matching Docker servercore Docker container image to the VM
    
       eg:
-      Pull microsoft/nanoserver:1709 and microsoft/windowsservercore:1709 images to the system
       
+         on RS3: 
+            docker pull microsoft/nanoserver:1709
+            docker pull microsoft/windowsservercore:1709
+      
+         on RS4
+            docker pull microsoft/nanoserver:1803 
+            docker pull microsoft/windowsservercore:1803      
+      
       ps. For an internal build, you can find its servercore image in \amd64fre\containerbaseospkgs\cbaseospkg_serverdatacentercore_en-us
    
    - Optional step: [Install the VM Agent](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/agent-user-guide)
