@@ -96,23 +96,25 @@
           Get the value of the account-key (key1) from the following for use in the later commands        
       - az storage account keys list --resource-group soccerl-storage --account-name soccerlstorage
       
-            [{
+            PS D:\github\tools\Azure\prepAzureVHD> az storage account keys list --resource-group soccerl-storage --account-name soccerlstorage
+            [
+              {
                 "keyName": "key1",
                 "permissions": "Full",
-                "value": "rTcJclTkQQTXXJzyTi3zXPCrCqzzOdoNF8NM7eecGyC+Tr1iayLACkKTy8h47nQeyPJSWWURzh6zWqn9LOhTmQ=="
+                "value": "CSNUTol7N8rlbI8nafJeuuSdhy8YD5k5SoiLwtHDUnWGcNkUzPT101uMpfD9Wx3UCm40YsRBE4k5TicqrG6TIg=="
               },
               {
                 "keyName": "key2",
                 "permissions": "Full",
-                "value": "TtupCz96vmfi42a6iTbEl8nwsN3o8thS3aBnSgCBkYNchJ+OFrHsTsVE1loeCggcSdRhPdEBMh1bAU+5GXOtHw=="
+                "value": "RST63FdGsimA6hY5j/agDv+cS0/lprTYVqT11DaGWSoYc+cXXqxK/zcwhioJL5cJGXAVmGgERLT7aG7lQjEa5A=="
               }
             ]
       
-      - az storage container create -n rs4container --account-name soccerlstorage --account-key "rTcJclTkQQTXXJzyTi3zXPCrCqzzOdoNF8NM7eecGyC+Tr1iayLACkKTy8h47nQeyPJSWWURzh6zWqn9LOhTmQ=="
+      - az storage container create -n rs4container --account-name soccerlstorage --account-key "CSNUTol7N8rlbI8nafJeuuSdhy8YD5k5SoiLwtHDUnWGcNkUzPT101uMpfD9Wx3UCm40YsRBE4k5TicqrG6TIg=="
 
-      - az storage blob upload --account-name soccerlstorage --account-key "rTcJclTkQQTXXJzyTi3zXPCrCqzzOdoNF8NM7eecGyC+Tr1iayLACkKTy8h47nQeyPJSWWURzh6zWqn9LOhTmQ==" --container-name rs4container --type page --file ./AzureWindowsRS4.vhd --name AzureWindowsRS4.vhd
+      - az storage blob upload --account-name soccerlstorage --account-key "CSNUTol7N8rlbI8nafJeuuSdhy8YD5k5SoiLwtHDUnWGcNkUzPT101uMpfD9Wx3UCm40YsRBE4k5TicqrG6TIg==" --container-name rs4container --type page --file ./AzureWindowsRS4.vhd --name AzureWindowsRS4.vhd
 
-      - az storage blob url    --account-name soccerlstorage --account-key "rTcJclTkQQTXXJzyTi3zXPCrCqzzOdoNF8NM7eecGyC+Tr1iayLACkKTy8h47nQeyPJSWWURzh6zWqn9LOhTmQ==" --container-name rs4container --name AzureWindowsRS4.vhd
+      - az storage blob url    --account-name soccerlstorage --account-key "CSNUTol7N8rlbI8nafJeuuSdhy8YD5k5SoiLwtHDUnWGcNkUzPT101uMpfD9Wx3UCm40YsRBE4k5TicqrG6TIg==" --container-name rs4container --name AzureWindowsRS4.vhd
 
       - az disk create --resource-group soccerl-storage --name rs4disk --source "https://soccerlstorage.blob.core.windows.net/rs4container/AzureWindowsRS4.vhd"
 
